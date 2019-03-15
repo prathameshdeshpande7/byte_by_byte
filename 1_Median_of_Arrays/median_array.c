@@ -12,13 +12,13 @@
 
 #include <stdio.h>
 
-int c[20];
 
 double median(int a[], int len_a, int b[], int len_b)
 {
     int *ptr_a, *ptr_b;
     int i, j, k;
     double med = 0;
+    int c[len_a + len_b];
 
     ptr_a = a, ptr_b = b;
 
@@ -30,11 +30,15 @@ double median(int a[], int len_a, int b[], int len_b)
         }
     }
 
-    for( i = 0; i < k; i++) {
-        printf("c[%d] = %d, k = %d\n", i, c[i], k);
+    while( i < len_a) {
+        c[k++] = a[i++];
     }
-    med = (c[k/2 - 1] + c[k/2]) / 2;
-    printf("Target c[k/2 - 1] %d and c[k/2] %d = %d\n", c[k/2 - 1], c[k/2], med);
+
+    while( j < len_b) {
+        c[k++] = b[j++];
+    }
+
+    med = ((double)c[k/2 - 1] + (double)c[k/2]) / 2;
     return med;
 }
 
@@ -45,9 +49,19 @@ int main()
     int length_a = sizeof(a) / sizeof(a[0]);
     int length_b = sizeof(b) / sizeof(b[0]);
     double med;
+    int i, j;
 
     med = median(a, length_a, b, length_b);
 
-    printf("Median of arrays a[] and b[] is %f\n", med);
+    printf("a[] = {");
+    for( i = 0; i < length_a; i++ ) {
+        printf( "%d%s", a[i], (i == length_a - 1) ? "}" : ", " );
+    }
+
+    printf("\nb[] = {");
+    for( j = 0; j < length_b; j++ ) {
+        printf( "%d%s", b[j], (j == length_b - 1) ? "}" : ", " );
+    }
+    printf("\nMedian of arrays a[] and b[] is %f\n", med);
     return 0;
 }
