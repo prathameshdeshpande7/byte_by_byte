@@ -12,7 +12,7 @@
 
 #include <stdio.h>
 
-
+#if 0
 double median(int a[], int len_a, int b[], int len_b)
 {
     int *ptr_a, *ptr_b;
@@ -36,6 +36,39 @@ double median(int a[], int len_a, int b[], int len_b)
 
     while( j < len_b) {
         c[k++] = b[j++];
+    }
+
+    med = ((double)c[k/2 - 1] + (double)c[k/2]) / 2;
+    return med;
+}
+#endif
+
+#define COUNT_OF(elem)  (sizeof(elem) / sizeof(elem[0]))
+double median(int a[], int len_a, int b[], int len_b)
+{
+    int *ptr_a, *ptr_b;
+    double med = 0;
+    int c[len_a + len_b], k = 0, i;
+
+    for( ptr_a = a, ptr_b = b; ptr_a < &a[COUNT_OF(a)] && ptr_b < &b[COUNT_OF(b)];) {
+        if( *ptr_a <= *ptr_b ) {
+            c[k++] = *ptr_a++;
+        } else {
+            c[k++] = *ptr_b++;
+        }
+    }
+
+    printf("COUNT %d, %d\n", COUNT_OF(a), COUNT_OF(b));
+    while( ptr_a < &a[COUNT_OF(a)] ) {
+        c[k++] = *ptr_a++;
+    }
+
+    while( ptr_b < &b[COUNT_OF(b)] ) {
+        c[k++] = *ptr_b++;
+    }
+
+    for( i = 0; i < k; i++ ) {
+        printf("c[%d] = %d\n", i, c[i]);
     }
 
     med = ((double)c[k/2 - 1] + (double)c[k/2]) / 2;
