@@ -1,6 +1,7 @@
 /*
  * Question: Given a 2D array of 0's and 1's
  * find the largest square subarray of all 1's
+ * O(n*m * 3^(n+m))
  */
 #include<stdio.h>
 
