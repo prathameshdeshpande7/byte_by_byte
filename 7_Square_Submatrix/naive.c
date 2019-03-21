@@ -11,7 +11,7 @@ int subarray(int m, int n, int arr[][n], int i, int j)
 {
 	if (i == m && j == n) return 0;
 
-	if (arr[i][j] == 0) return 0;
+	if (!arr[i][j]) return 0;
 
 	return 1 + MIN(MIN(subarray(m, n, arr, i + 1, j),
 		       subarray(m, n, arr, i, j + 1)),
@@ -24,7 +24,8 @@ int square_subarray(int m, int n, int arr[][n])
 
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			max = MAX(max, subarray(m, m, arr, i, j));
+			if (arr[i][j])
+				max = MAX(max, subarray(m, m, arr, i, j));
 		}
 	}
 	return max;
