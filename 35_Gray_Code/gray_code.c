@@ -12,14 +12,34 @@
 #include <stdio.h>
 #include "print_binary.h"
 
-int gray(int a, int b)
+#define MASK_LAST_BIT	0x1
+
+int gray(long long int a, long long int b)
 {
-	return 1;
+	int no_of_diff_bits = 0;
+
+	while(a && b) {
+		// Check for match of last bit of both integers
+		if (a & MASK_LAST_BIT == b & MASK_LAST_BIT) {
+			a >>= 1;
+			b >>= 1;
+		} else {
+			no_of_diff_bits++;
+			if (no_of_diff_bits > 1)
+				return 0;	// false, no gray code
+		}
+	}
+
+	if (a == 0)
+		return ((b & (b - 1)) == 0) ? 1: 0;
+	if (b == 0)
+		return ((a & (a - 1)) == 0) ? 1: 0;
 }
 
 int main()
 {
-	long long int a = 15, b = 16;
+	//long long int a = 15, b = 16;
+	long long int a = 1, b = 2;
 	int is_gray = -1;
 
 	is_gray = gray(a, b);
