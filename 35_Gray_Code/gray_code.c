@@ -16,30 +16,28 @@
 
 int gray(long long int a, long long int b)
 {
-	int no_of_diff_bits = 0;
+	long long int xor = a ^ b;
 
-	while(a && b) {
-		// Check for match of last bit of both integers
-		if (a & MASK_LAST_BIT == b & MASK_LAST_BIT) {
-			a >>= 1;
-			b >>= 1;
-		} else {
-			no_of_diff_bits++;
-			if (no_of_diff_bits > 1)
-				return 0;	// false, no gray code
-		}
+	// if both integers are same, return false as gray code
+	// since there is no difference of bits
+	if (xor == 0)
+		return 0;
+
+	while(xor > 0) {
+		if (xor % 2 == 1 && xor >> 1)
+			return 0;
+		xor >>= 1;
 	}
 
-	if (a == 0)
-		return ((b & (b - 1)) == 0) ? 1: 0;
-	if (b == 0)
-		return ((a & (a - 1)) == 0) ? 1: 0;
+	return 1;
 }
 
 int main()
 {
 	//long long int a = 15, b = 16;
-	long long int a = 1, b = 2;
+	long long int a = 32767, b = 32767;
+	//long long int a = 2, b = 1;
+	//long long int a = 1, b = 0;
 	int is_gray = -1;
 
 	is_gray = gray(a, b);
