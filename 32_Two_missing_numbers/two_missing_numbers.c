@@ -42,39 +42,20 @@ void two_missing(int arr[], int len, int *missing)
 	for (i = pivot + 1; i <= size; i++)
 		total_right_xor ^= i;
 
-	printf("TOTAL LEFT XOR %d, TOTAL RIGHT XOR %d\n", total_left_xor, total_right_xor);
-//#if 0
-	for (i = 0; i < len && arr[i] <= pivot; i++) {
-			printf("1. Pivot %d, arr %d\n", pivot, arr[i]);
-			arr_left_xor ^= arr[i];
-	}
-	printf("arr 2 %d, pivot %d, len %d\n", arr[2], pivot, len);
-	for (i = 0; i < len && arr[i] > pivot; i++)
-		printf("ARRAY %d ", arr[i]);
-	for (i = 0; i < len && arr[i] > pivot; i++) {
-			printf("2. Pivot %d, arr %d\n", pivot, arr[i]);
-			arr_right_xor ^= arr[i];
-	}
-//#endif
-#if 0
 	for (i = 0; i < len; i++) {
 		if (arr[i] <= pivot) {
-			printf("1. Pivot %d, arr %d\n", pivot, arr[i]);
 			arr_left_xor ^= arr[i];
 		} else {
-			printf("2. Pivot %d, arr %d\n", pivot, arr[i]);
 			arr_right_xor ^= arr[i];
 		}
 	}
-#endif
 	missing[0] = arr_left_xor ^ total_left_xor;
 	missing[1] = arr_right_xor ^ total_right_xor;
-	printf("MISSING[0] %d, MISSING [1] %d\n", missing[0], missing[1]);
 }
 
 int main()
 {
-	int arr[] = {2, 3, 4}, *missing;
+	int arr[] = {1, 2, 5}, *missing;
 	int len_arr = sizeof(arr)/sizeof(arr[0]), i;
 
 	for (i = 0; i < len_arr; i++)
