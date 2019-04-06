@@ -63,20 +63,37 @@ void destroy_stack(STACK *stack)
 void sort_stack(STACK *s1, STACK *s2)
 {
 	int temp = 0;
+	int saved_temp = 0;
 
-	while(temp = pop(s1)) {
-		if (!is_empty(s2))
-			push(s2, temp);
+	while(!is_empty(s1)) {
+		// If s1 not empty
+		// Pop the top element of s1
+		temp = pop(s1);
 
-		if (temp < top(s2)) {
-			push(s2, temp);
+		/*
+		 * while s2 not empty, check if temp can be pushed
+		 * else go on popping from s2 and pushing to s1
+		 */
+		while(!is_empty(s2)) {
+			if(temp < top(s2)) {
+				push(s2, temp);
+				saved_temp = 1;
+				break;
+			} else {
+				push(s1, pop(s2));
+			}
 		}
+		if (!saved_temp)
+			push(s2, temp);
+		else
+			saved_temp = 0;
 	}
 }
 
 int main()
 {
-	int arr[] = {1, 2, 3, 4, 5, 10, 9, 8, 7, 6};
+	//int arr[] = {1, 2, 3, 4, 5, 10, 9, 8, 7, 6};
+	int arr[] = {10, 9, 8, 7, 6, 1, 3, 2, 4, 5};
 	int i, len_arr = sizeof(arr)/sizeof(arr[0]);
 	STACK s1, s2;
 
@@ -92,11 +109,12 @@ int main()
 	for (i = 0; i < len_arr; i++)
 		push(&s1, arr[i]);
 
-
 	sort_stack(&s1, &s2);
 
+	printf("Sorted stack: ");
 	while(!is_empty(&s2))
 		printf("%d ", pop(&s2));
+	printf("\n");
 
 	destroy_stack(&s2);
 	destroy_stack(&s1);
